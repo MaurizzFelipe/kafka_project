@@ -188,6 +188,7 @@ The --from-beginning option ensures that the consumer starts from the beginning 
 Now, you have a basic Kafka setup with a topic, producer, and consumer. You can experiment by typing messages into the producer's terminal and observing them being received by the consumer. Keep in mind that these examples use the command-line tools for simplicity. In real-world scenarios, you would typically use Kafka clients in your preferred programming language to create more sophisticated producers and consumers.
 
 ![producer](kafka_prod.png)
+
 ![consumer](kafka_cons.png)
 
 
@@ -405,6 +406,8 @@ if __name__ == "__main__":
 ```
 
 The save_to_postgresql(data) function in the script handles the data insertion into the appropriate table. After running the script, verify that the data has been successfully stored in the database.
+
+![consumer](kafka_sql.png)
 
 **Connect PostgreSQL to Power BI using odbc**:
 
