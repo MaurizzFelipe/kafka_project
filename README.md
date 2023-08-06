@@ -187,6 +187,10 @@ The --from-beginning option ensures that the consumer starts from the beginning 
 
 Now, you have a basic Kafka setup with a topic, producer, and consumer. You can experiment by typing messages into the producer's terminal and observing them being received by the consumer. Keep in mind that these examples use the command-line tools for simplicity. In real-world scenarios, you would typically use Kafka clients in your preferred programming language to create more sophisticated producers and consumers.
 
+![producer](kafka_prod.png)
+![consumer](kafka_cons.png)
+
+
 ## Data Extraction from API
 
 After configuring the kafka environment, you will implement the data extraction process from the selected stock market API. Use the Python script provided in this project to fetch the data from the API. Make sure to replace the nasdaq_api_key with your API key and set the nasdaq_endpoint to the desired endpoint for the stock data you want to retrieve.
@@ -303,11 +307,13 @@ Under the "User DSN" or "System DSN" tab (depending on whether the connection wi
 
 Choose the PostgreSQL ODBC driver from the list of drivers installed in your system.
 
+![odbc](odbc.png)
+
 **Configure the Connection**:
 
 In the configuration window, provide the necessary connection details:
 
-Data Source Name: 
+**Data Source Name*: 
 
 Give your ODBC data source a name (e.g., "MyPostgreSQL").
 
@@ -359,7 +365,19 @@ Save and publish your Power BI report to share it with stakeholders or embed it 
 
 By following these steps, you will have successfully connected PostgreSQL to Power BI using the ODBC driver, enabling you to analyze and visualize data from your PostgreSQL database in Power BI.
 
+## Results:
 
+When you run the python script the Power Bi connected to the postgresql database will start consuming the incoming data from the stock api.
+
+![consumer](emptu.png)
+
+The first refresh after a few seconds will display some data into the dashboard. 
+
+![consumer](first_Data.png)
+
+After 20 min running the scrip the dashboard ingested more than 1 million rows.
+
+![consumer](1mi.png)
 ## Lessons Learned
 
 **Integration Complexity**: 
