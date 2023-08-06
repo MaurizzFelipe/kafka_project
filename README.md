@@ -360,40 +360,39 @@ By following these steps, you will have successfully connected PostgreSQL to Pow
 
 ## Lessons Learned
 
-Integration Complexity: 
+**Integration Complexity**: 
 
 Integrating multiple technologies, such as PostgreSQL, Kafka, and Power BI, can be complex. It is crucial to plan and understand the intricacies of each system to ensure a smooth integration process.
 
-Data Pipeline Reliability: 
+**Data Pipeline Reliability**: 
 
 Building a reliable data pipeline is essential for real-time data analysis. Ensuring data integrity, handling data updates, and managing potential failures are critical aspects of a robust pipeline.
 
-ODBC Configuration: 
+**ODBC Configuration**: 
 
 Configuring ODBC connections to accept PostgreSQL-Kafka connections can be challenging. Proper documentation and understanding of the ODBC driver settings are crucial to establish successful connections.
 
-Data Transformation and Cleaning: 
+**Data Transformation and Cleaning**: 
 
 The Power Query Editor in Power BI is a powerful tool for data transformation and cleaning. Learning to use it effectively can significantly enhance data visualization and analysis.
 
-Data Visualization: 
+**Data Visualization**: 
 
 Building interactive and insightful visualizations is a skill that requires practice and creativity. Understanding the audience's needs and conveying data insights effectively are crucial for successful data visualization.
 
-Data Security: 
+**Data Security**: 
 
 Ensuring data security and managing user access to the PostgreSQL database is of utmost importance. Implementing appropriate security measures and following best practices is essential to protect sensitive information.
 
-Continuous Learning: 
+**Continuous Learning**: 
 
 Working with various technologies and tools requires continuous learning and staying up-to-date with the latest developments. Regularly exploring new features and improvements can lead to more efficient workflows.
 
-
-Scalability Considerations: 
+**Scalability Considerations**: 
 
 As the project involves real-time data, scalability should be a key consideration. Ensuring that the system can handle increased data volume and user load is crucial for long-term success.
 
-Documentation and Knowledge Sharing: 
+**Documentation and Knowledge Sharing**: 
 
 Comprehensive documentation and knowledge sharing among team members are essential for seamless project maintenance and troubleshooting.
 
