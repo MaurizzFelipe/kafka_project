@@ -57,124 +57,15 @@ We will connect the databases we develop and create an analytical dashboard with
 Before proceeding with the data pipeline project, ensure that you have properly configured your machine to run Apache kafka, zookeeper,Spark. 
 For more details on configuration, refer to the official documentation: [Apache Kafka documentation](https://kafka.apache.org/documentation/)
 
-## Running Spark on Your Machine using Ubuntu
-
-Open the Ubuntu Terminal:
-
-Launch the Ubuntu terminal on your machine.
-
-## Download Spark Binaries:
+## Download Apache Binaries:
 
 Use the wget command to download the Apache binaries. 
 
            wget https://dlcdn.apache.org/spark/spark-3.4.1/spark-3.4.1-bin-hadoop3.tgz
            wget https://downloads.apache.org/kafka/3.5.1/kafka-3.5.1-src.tgz
            wget https://www.apache.org/dyn/closer.lua/zookeeper/zookeeper-3.9.0/apache-zookeeper-3.9.0-bin.tar.gz
-## note about zookeeper:
-
-Configure ZooKeeper (optional):
-
-ZooKeeper comes with a default configuration file (zoo.cfg), but you can customize it according to your needs. The configuration file contains parameters like data directory, client port, tick time, etc. If you want to customize the configuration, you can do it before starting ZooKeeper.
-
-Start ZooKeeper:
-
-To start ZooKeeper, you need to run its server. The command to start ZooKeeper varies depending on your operating system.
-
-**On Unix-like systems (Linux, macOS)**:
-
-Open a terminal and navigate to the ZooKeeper installation directory (where the bin folder is located) and use the following command:
-
-    ./bin/zkServer.sh start
-
-Or you can run zookeeper from kafka as well:
-
-    ./bin/zookeeper-server-start.sh config/zookeeper.properties
-
-On Windows:
-
-Open Command Prompt or PowerShell and navigate to the ZooKeeper installation directory and use the following command:
-
-
-    bin\zkServer.cmd start
-    
-## Start Kafka Server:
-
-To start Kafka, open a new terminal and navigate to the Kafka installation directory where the bin folder is located and use the following command:
-
-On Unix-like systems (Linux, macOS):
-
-    ./bin/kafka-server-start.sh config/server.properties
-
-## Create kafka basic env
-
-Create a Topic:
-
-To create a topic, you can use the kafka-topics.sh (or kafka-topics.bat on Windows) command-line tool that comes with Kafka. 
-
-Open a terminal or command prompt and navigate to the Kafka installation directory. Then, use the following command to create a topic:
-
-On Unix-like systems (Linux, macOS):
-
-    ./bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic your_topic_name --partitions 3 --replication-factor 1
-
-On Windows:
-
-    bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 --create --topic your_topic_name --partitions 3 --replication-factor 1
-
-Replace your_topic_name with the desired name for your topic. 
-
-The --partitions option specifies the number of partitions in the topic, and the --replication-factor option sets the replication factor for each partition. 
-
-Adjust these values based on your requirements.
-
-Set Up a Producer:
-
-To create a Kafka producer, you can use the kafka-console-producer.sh (or kafka-console-producer.bat on Windows) command-line tool. 
-
-This producer reads data from the console and sends it to the specified topic. 
-
-Open another terminal or command prompt (while keeping Kafka running) and use the following command:
-
-On Unix-like systems (Linux, macOS):
-
-    ./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic your_topic_name
-
-On Windows:
-
-    bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic your_topic_name
-
-Replace your_topic_name with the name of the topic you created in the previous step. 
-
-Now, anything you type in the console will be sent as a message to the specified topic.
-
-Set Up a Consumer:
-
-To create a Kafka consumer, you can use the kafka-console-consumer.sh (or kafka-console-consumer.bat on Windows) command-line tool. 
-
-This consumer reads messages from the specified topic and displays them on the console.
-
-Open yet another terminal or command prompt (while keeping Kafka running) and use the following command:
-
-On Unix-like systems (Linux, macOS):
-
-    ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic your_topic_name --from-beginning
-
-On Windows:
-
-    bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic your_topic_name --from-beginning
-
-Replace your_topic_name with the name of the topic you created. 
-
-The --from-beginning option ensures that the consumer starts from the beginning of the topic and reads all existing messages.
-
-Now, you have a basic Kafka setup with a topic, producer, and consumer. You can experiment by typing messages into the producer's terminal and observing them being received by the consumer. Keep in mind that these examples use the command-line tools for simplicity. In real-world scenarios, you would typically use Kafka clients in your preferred programming language to create more sophisticated producers and consumers.
-
-![Download hadoop](download-apache.png)
-
-## Extract Spark Archive:
 
 Once the download is complete, extract the apache archives using the following command:
-
 
            tar -xvzf spark-3.4.1-bin-hadoop3.tgz
            tar -xvzf kafka-3.5.1-src.tgz
@@ -195,6 +86,108 @@ Source the updated .bashrc or .bash_profile file to apply the changes immediatel
            source ~/.bashrc
 
            source ~/.bash_profile
+           
+## note about zookeeper:
+
+**Configure ZooKeeper (optional)**:
+
+ZooKeeper comes with a default configuration file (zoo.cfg), but you can customize it according to your needs. The configuration file contains parameters like data directory, client port, tick time, etc. If you want to customize the configuration, you can do it before starting ZooKeeper.
+
+**Start ZooKeeper**:
+
+To start ZooKeeper, you need to run its server. The command to start ZooKeeper varies depending on your operating system.
+
+**On Unix-like systems (Linux, macOS)**:
+
+Open a terminal and navigate to the ZooKeeper installation directory (where the bin folder is located) and use the following command:
+
+    ./bin/zkServer.sh start
+
+Or you can run zookeeper from kafka as well:
+
+    ./bin/zookeeper-server-start.sh config/zookeeper.properties
+
+**On Windows**:
+
+Open Command Prompt or PowerShell and navigate to the ZooKeeper installation directory and use the following command:
+
+    bin\zkServer.cmd start
+    
+## Start Kafka Server:
+
+To start Kafka, open a new terminal and navigate to the Kafka installation directory where the bin folder is located and use the following command:
+
+**On Unix-like systems (Linux, macOS)**:
+
+    ./bin/kafka-server-start.sh config/server.properties
+
+## Create kafka basic env
+
+**Create a Topic**:
+
+To create a topic, you can use the kafka-topics.sh (or kafka-topics.bat on Windows) command-line tool that comes with Kafka. 
+
+Open a terminal or command prompt and navigate to the Kafka installation directory. Then, use the following command to create a topic:
+
+**On Unix-like systems (Linux, macOS)**:
+
+    ./bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic your_topic_name --partitions 3 --replication-factor 1
+
+**On Windows**:
+
+    bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 --create --topic your_topic_name --partitions 3 --replication-factor 1
+
+Replace your_topic_name with the desired name for your topic. 
+
+The --partitions option specifies the number of partitions in the topic, and the --replication-factor option sets the replication factor for each partition. 
+
+Adjust these values based on your requirements.
+
+**Set Up a Producer**:
+
+To create a Kafka producer, you can use the kafka-console-producer.sh (or kafka-console-producer.bat on Windows) command-line tool. 
+
+This producer reads data from the console and sends it to the specified topic. 
+
+Open another terminal or command prompt (while keeping Kafka running) and use the following command:
+
+**On Unix-like systems (Linux, macOS)**:
+
+    ./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic your_topic_name
+
+**On Windows**:
+
+    bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic your_topic_name
+
+Replace your_topic_name with the name of the topic you created in the previous step. 
+
+Now, anything you type in the console will be sent as a message to the specified topic.
+
+**Set Up a Consumer**:
+
+To create a Kafka consumer, you can use the kafka-console-consumer.sh (or kafka-console-consumer.bat on Windows) command-line tool. 
+
+This consumer reads messages from the specified topic and displays them on the console.
+
+Open yet another terminal or command prompt (while keeping Kafka running) and use the following command:
+
+**On Unix-like systems (Linux, macOS)**:
+
+    ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic your_topic_name --from-beginning
+
+**On Windows**:
+
+    bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic your_topic_name --from-beginning
+
+Replace your_topic_name with the name of the topic you created. 
+
+The --from-beginning option ensures that the consumer starts from the beginning of the topic and reads all existing messages.
+
+Now, you have a basic Kafka setup with a topic, producer, and consumer. You can experiment by typing messages into the producer's terminal and observing them being received by the consumer. Keep in mind that these examples use the command-line tools for simplicity. In real-world scenarios, you would typically use Kafka clients in your preferred programming language to create more sophisticated producers and consumers.
+
+![Download hadoop](download-apache.png)
+
+
            
 
 
