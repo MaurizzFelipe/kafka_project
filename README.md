@@ -185,45 +185,220 @@ The --from-beginning option ensures that the consumer starts from the beginning 
 
 Now, you have a basic Kafka setup with a topic, producer, and consumer. You can experiment by typing messages into the producer's terminal and observing them being received by the consumer. Keep in mind that these examples use the command-line tools for simplicity. In real-world scenarios, you would typically use Kafka clients in your preferred programming language to create more sophisticated producers and consumers.
 
-![Download hadoop](download-apache.png)
+## Data Extraction from API
 
+After configuring the kafka environment, you will implement the data extraction process from the selected stock market API. Use the Python script provided in this project to fetch the data from the API. Make sure to replace the nasdaq_api_key with your API key and set the nasdaq_endpoint to the desired endpoint for the stock data you want to retrieve.
 
+## Create a PostgreSQL Database
+
+Now, you'll create a PostgreSQL database to store the fetched stock market data. 
+
+Start PostgreSQL Server:
+
+**On Linux/macOS**: 
+
+Open a terminal and enter the following command to start the PostgreSQL server:
+
+           sudo service postgresql start
+**On Windows**: 
+
+Open the Command Prompt or PowerShell as an administrator and start the PostgreSQL service with:
+
+           net start postgresql
+
+Open a new terminal or command prompt window.
+
+For local connections, you can use the psql command-line client. 
+
+Enter the following command to connect to the PostgreSQL server with the default settings:
+
+           psql -U postgres
+
+-U specifies the username to connect with. By default, the superuser username is "postgres."
+
+If your PostgreSQL server is running on a different host or port, you can specify the host and port using the -h and -p options, respectively. 
+
+**For example**:
+
+           psql -U postgres -h localhost -p 5432
            
+Replace "localhost" with the IP address or domain name of the server if it's running on a different machine.
 
+If prompted, enter the password for the PostgreSQL user.
 
+You should now be connected to the PostgreSQL server, and the psql command prompt will appear, allowing you to execute SQL commands and interact with the database.
 
+**Create a database to dump the date**.
 
-### Data Visualization
+           createdb mydatabase
 
-![Example dashboard image](example-dashboard.png)
+Replace "mydatabase" with the desired name of your new database.
 
-### Data Architecture
+If the database is created successfully, you should see a message confirming the creation.
 
-![Example architecture image](example-architecture.png)
+Use the provided PostgreSQL credentials (postgres_host, postgres_port, postgres_database, postgres_user, and postgres_password) to establish a connection to the database.
 
-If you decide to include this, you should also talk a bit about why you chose the architecture and tools you did for this project.
+## Establishing the Connection**:
 
-## Prerequisites
+In Python, you can use the psycopg2 library to connect to PostgreSQL and interact with the database. psycopg2 is a popular PostgreSQL adapter for Python that allows you to execute SQL commands and manage the database connections effectively.
 
-Directions or anything needed before running the project.
+Import the psycopg2 library in your Python script.
 
-- Prerequisite 1
-- Prerequisite 2
-- Prerequisite 3
+Use the psycopg2.connect() function to establish a connection to the PostgreSQL server by passing the appropriate credentials.
 
-## How to Run This Project
+If the connection is successful, you will obtain a connection object that you can use to execute SQL commands on the database.
 
-Replace the example step-by-step instructions with your own.
+**Creating Tables**:
 
-1. Install x packages
-2. Run command: `python x`
-3. Make sure it's running properly by checking z
-4. To clean up at the end, run script: `python cleanup.py`
+Once the connection is established, you can use SQL commands to create the necessary tables in the PostgreSQL database to store the stock market data. The table schema should match the structure of the data you fetched from the API. You define the table names, column names, data types, constraints, and other properties using SQL CREATE TABLE statements.
+
+For example, you might create a table called stock_data with columns like date, open, high, low, close, and wap to store the stock market data fields.
+
+You can create a schema or use the public schema by default.
+
+           CREATE TABLE IF NOT EXISTS public.stock_data (
+               date DATE,
+               open NUMERIC,
+               high NUMERIC,
+               low NUMERIC,
+               close NUMERIC,
+               wap NUMERIC
+           );
+           
+**Configure Access for Local Connections**:
+
+Ensure that your PostgreSQL configuration allows local connections. 
+
+Modify the PostgreSQL server configuration file (postgresql.conf) to listen on the appropriate IP address and port (typically, localhost and default port 5432). Additionally, update the pg_hba.conf file to grant access for local connections to the database with the provided credentials.
+
+You can configure your server using the command:
+
+           sudo nano /path/to/pg_hba.conf
+
+**Dump API Data to PostgreSQL**:
+
+Once the connection to the PostgreSQL database is established, run the Python script to fetch the data from the API and store it in the PostgreSQL database. 
+
+The save_to_postgresql(data) function in the script handles the data insertion into the appropriate table. After running the script, verify that the data has been successfully stored in the database.
+
+**Connect PostgreSQL to Power BI using odbc**:
+
+Ensure that you have installed the PostgreSQL ODBC driver on your computer. 
+
+You can download and install the driver from the PostgreSQL website. https://odbc.postgresql.org
+
+To configure an ODBC connection for PostgreSQL in Windows, you'll need to follow these steps:
+
+Install PostgreSQL ODBC Driver:
+
+Download and install the PostgreSQL ODBC driver suitable for your system from the official PostgreSQL website.
+
+**Set up ODBC Data Source**:
+
+Open the "ODBC Data Source Administrator" on your Windows machine. You can find it by searching for "ODBC Data Sources" in the start menu or searching for "ODBC" in the Control Panel.
+
+Under the "User DSN" or "System DSN" tab (depending on whether the connection will be available for all users or only the current user), click the "Add" button.
+
+Choose the PostgreSQL ODBC driver from the list of drivers installed in your system.
+
+**Configure the Connection**:
+
+In the configuration window, provide the necessary connection details:
+
+Data Source Name: 
+
+Give your ODBC data source a name (e.g., "MyPostgreSQL").
+
+**Description*: 
+
+Optionally, add a description for your reference.
+
+**Server*: 
+
+Enter the address or IP of your PostgreSQL server.
+
+**Port*: 
+
+The port number where your PostgreSQL server is running (default is 5432).
+
+**Database*: 
+
+The name of the database you want to connect to.
+
+**Username and Password*: 
+
+Enter the PostgreSQL credentials to authenticate.
+
+Test the connection to ensure it's working correctly.
+
+**Save the Configuration**:
+
+Click "OK" to save the ODBC data source configuration.
+
+## Connect ODBC to Power BI:
+
+Open Power BI and click on "Get Data" from the Home tab.
+
+Select "More..." to view all data connection options.
+
+In the "Get Data" window, search for "ODBC" and select "ODBC" from the list of available data sources.
+
+Choose the PostgreSQL ODBC driver from the list of ODBC data sources and click "Connect."
+
+In the ODBC dialog box, enter the connection details for your PostgreSQL database, such as server name, database name, username, and password.
+
+Click "OK" to establish the connection to your PostgreSQL database.
+
+Power BI will load the data from PostgreSQL through the ODBC connection. You can use the Power Query Editor to perform any necessary data transformations or cleanup.
+
+Create interactive visualizations, charts, and reports based on the data imported from PostgreSQL to gain insights.
+
+Save and publish your Power BI report to share it with stakeholders or embed it in other applications.
+
+By following these steps, you will have successfully connected PostgreSQL to Power BI using the ODBC driver, enabling you to analyze and visualize data from your PostgreSQL database in Power BI.
+
 
 ## Lessons Learned
 
-It's good to reflect on what you learned throughout the process of building this project. Here you might discuss what you would have done differently if you had more time/money/data. Did you end up choosing the right tools or would you try something else next time?
+Integration Complexity: 
+
+Integrating multiple technologies, such as PostgreSQL, Kafka, and Power BI, can be complex. It is crucial to plan and understand the intricacies of each system to ensure a smooth integration process.
+
+Data Pipeline Reliability: 
+
+Building a reliable data pipeline is essential for real-time data analysis. Ensuring data integrity, handling data updates, and managing potential failures are critical aspects of a robust pipeline.
+
+ODBC Configuration: 
+
+Configuring ODBC connections to accept PostgreSQL-Kafka connections can be challenging. Proper documentation and understanding of the ODBC driver settings are crucial to establish successful connections.
+
+Data Transformation and Cleaning: 
+
+The Power Query Editor in Power BI is a powerful tool for data transformation and cleaning. Learning to use it effectively can significantly enhance data visualization and analysis.
+
+Data Visualization: 
+
+Building interactive and insightful visualizations is a skill that requires practice and creativity. Understanding the audience's needs and conveying data insights effectively are crucial for successful data visualization.
+
+Data Security: 
+
+Ensuring data security and managing user access to the PostgreSQL database is of utmost importance. Implementing appropriate security measures and following best practices is essential to protect sensitive information.
+
+Continuous Learning: 
+
+Working with various technologies and tools requires continuous learning and staying up-to-date with the latest developments. Regularly exploring new features and improvements can lead to more efficient workflows.
+
+
+Scalability Considerations: 
+
+As the project involves real-time data, scalability should be a key consideration. Ensuring that the system can handle increased data volume and user load is crucial for long-term success.
+
+Documentation and Knowledge Sharing: 
+
+Comprehensive documentation and knowledge sharing among team members are essential for seamless project maintenance and troubleshooting.
+
+By reflecting on these lessons learned, future projects can benefit from improved planning, execution, and overall success in integrating PostgreSQL, Kafka, and Power BI to analyze real-time data effectively.
 
 ## Contact
 
-Please feel free to contact me if you have any questions at: LinkedIn, Twitter
+Please feel free to contact me if you have any questions at: https://www.linkedin.com/in/felipe-mauriz-rodrigues/
