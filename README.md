@@ -191,10 +191,6 @@ Now, you have a basic Kafka setup with a topic, producer, and consumer. You can 
 ![consumer](kafka_cons.png)
 
 
-## Data Extraction from API
-
-After configuring the kafka environment, you will implement the data extraction process from the selected stock market API. Use the Python script provided in this project to fetch the data from the API. Make sure to replace the nasdaq_api_key with your API key and set the nasdaq_endpoint to the desired endpoint for the stock data you want to retrieve.
-
 ## Create a PostgreSQL Database
 
 Now, you'll create a PostgreSQL database to store the fetched stock market data. 
@@ -280,6 +276,10 @@ Modify the PostgreSQL server configuration file (postgresql.conf) to listen on t
 You can configure your server using the command:
 
            sudo nano /path/to/pg_hba.conf
+
+## Data Extraction from API
+
+After configuring the kafka environment, you will implement the data extraction process from the selected stock market API. Use the Python script provided in this project to fetch the data from the API. Make sure to replace the nasdaq_api_key with your API key and set the nasdaq_endpoint to the desired endpoint for the stock data you want to retrieve.
 
 **Dump API Data to PostgreSQL**:
 
