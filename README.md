@@ -6,6 +6,8 @@ This project demonstrates how to create a simple data pipeline to extract data f
 
 The project is a hands-on demonstration of how to design and implement a basic data pipeline to extract real-time stock market data from a public API and store it efficiently in a PostgreSQL database.
 
+![Kafka basic infrastructure](kafka_arch.png)
+
 ## In this project, we aim to achieve the following objectives:
 
 **Data Extraction**: 
@@ -70,9 +72,7 @@ Once the download is complete, extract the apache archives using the following c
            tar -xvzf spark-3.4.1-bin-hadoop3.tgz
            tar -xvzf kafka-3.5.1-src.tgz
            tar -xvzf apache-zookeeper-3.9.0-bin.tar.gz
-
-![unzip](unzip-apache.png)
-
+           
 ## Set Environment Variables:
 
 Add the APACHE binary path and other environment variables to your .bashrc or .bash_profile file. 
@@ -88,6 +88,8 @@ Source the updated .bashrc or .bash_profile file to apply the changes immediatel
            source ~/.bash_profile
            
 ## note about zookeeper:
+
+![Zookeeper](zookeeper.png)
 
 **Configure ZooKeeper (optional)**:
 
